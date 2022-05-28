@@ -1,0 +1,156 @@
+.pagination__container {
+  width: 100%;
+  max-width: 1200px;
+  padding: 48px 24px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.pagination {
+  width: 100%;
+  max-width: 600px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#previous,
+#next {
+  font-weight: 600;
+  font-size: 16px;
+  background: none;
+  height: 36px;
+  border-radius: 4px;
+  padding: 0 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#previous {
+  margin-right: 16px;
+}
+#previous i {
+  margin-right: 8px;
+}
+#next {
+  margin-left: 16px;
+}
+#next i {
+  margin-left: 8px;
+}
+
+.page-button {
+  font-size: 16px;
+  background: none;
+  margin: 0 4px;
+  width: 36px;
+  height: 36px;
+  font-weight: 600;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 4px;
+}
+
+.page-button:hover,
+#previous:hover,
+#next:hover {
+  background: #ddd;
+}
+
+.page-button.current {
+  background-color: var(--primary);
+  color: #fff;
+
+}
+
+button:disabled,
+button:disabled span,
+button:disabled i {
+  color: #aaa;
+  cursor: not-allowed;
+}
+
+#next:disabled:hover,
+#previous:disabled:hover {
+  background: none;
+}
+
+.pagination input {
+  border: 1px solid #555;
+  margin: 0 8px;
+  border-radius: 4px;
+  width: 48px;
+  padding-left: 4px;
+  font-size: 16px;
+  height: 30px;
+  outline: none;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.hidden {
+  visibility: hidden !important;
+  position: absolute !important;
+}
+
+@media(max-width: 650px) {
+  .page-button {
+    height: 32px;
+    width: 32px;
+    font-size: 16px;
+  }
+  #previous,
+  #next {
+    height: 32px;
+    padding: 0 8px;
+  }
+  #previous {
+    margin-right: 8px;
+  }
+  #next {
+    margin-left: 8px;
+  }
+  #previous span,
+  #next span,
+  #previous i,
+  #next i {
+    font-size: 16px;
+  }
+}
+
+@media(max-width: 468px) {
+  .pagination__container {
+    padding: 24px 12px;
+  }
+  #previous,
+  #next {
+    width: 32px;
+  }
+  #previous {
+    margin-right: 4px;
+  }
+  #next {
+    margin-left: 4px;
+  }
+  #previous span,
+  #next span {
+    display: none;
+  }
+  #previous i,
+  #next i {
+    margin: 0;
+  }
+}

@@ -1,24 +1,45 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+
+// https://www.omdbapi.com/?i=tt3896198&apikey=74514e3b
+import Home from "./pages/Home"
+import Browse from "./pages/Browse";
+import { MovieProvider } from "./context/MovieContext";
+import MoviePage from "./pages/MoviePage";
 
 function App() {
+  const onClick = (e) => {
+    if(e.target.classList.contains('page-button__expand') 
+    || e.target.classList.contains('page-button__input')) {
+      return;
+    }
+    const pageInputs = document.querySelectorAll('.page-button__input');
+    const pageButtons = document.querySelectorAll('.page-button__expand');
+    if(pageInputs.length > 0) {
+      for(let pageInput of pageInputs) {
+        if(!pageInput.classList.contains('hidden')) {
+          pageInput.classList.add('hidden')
+        }
+      }
+      for(let pageButton of pageButtons) {
+        if(pageButton.classList.contains('hidden')) {
+          pageButton.classList.remove('hidden');
+        }
+      }
+    }
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <MovieProvider>
+      <Router>
+      <div className="App" onClick={onClick}>
+        <Routes>
+          <Route path='/' exact element={<Home />} />
+          <Route path='/browse' element={<Browse />} />
+          <Route path='/browse/:id' element={<MoviePage />} />
+        </Routes>
+      </div>
+      </Router>
+    </MovieProvider>
   );
 }
 

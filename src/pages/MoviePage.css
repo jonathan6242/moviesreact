@@ -1,0 +1,237 @@
+.movie-page {
+  background-color: var(--background);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.movie-page__main {
+  flex: 1;
+  width: 100%;
+  max-width: 1200px;
+  padding: 24px;
+  margin: 0 auto;
+}
+
+.movie-page__main--top {
+  padding: 0 48px;
+  margin-bottom: 16px;
+}
+
+.movie__selected {
+  display: flex;
+  padding: 0 48px;
+}
+
+.movie__selected--img {
+  width: 30%;
+  display: flex;
+  align-items: start;
+  justify-content: center;
+  padding: 24px 8px;
+  overflow: hidden;
+  min-width: 270px;
+}
+
+.movie__selected--img img {
+  width: 100%;
+}
+
+.movie__selected--description {
+  width: 70%;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+}
+
+.movie__selected--facts {
+  display: flex;
+  flex-wrap: wrap;
+  row-gap: 8px;
+  align-items: center;
+  margin-top: 12px;
+  margin-bottom: 24px;
+  font-size: 16px;
+}
+
+.movie-facts {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  row-gap: 4px;
+}
+
+.movie__selected--rated {
+  padding: 4px 8px;
+  margin-right: 16px;
+  border: 1px solid #555;
+  border-radius: 4px;
+}
+
+.movie__selected--rating--wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-bottom: 24px;
+  row-gap: 24px;
+}
+
+.movie__selected--metascore {
+  width: 60px;
+  height: 60px;
+  background: #242424;
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+  z-index: 1;
+  position: relative;
+  margin-right: 8px;
+}
+
+.movie__selected--metascore--inner {
+  width: 46px;
+  height: 46px;
+  z-index: 4;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #242424;
+  border-radius: 50%;
+}
+
+.movie__selected--metascore--percent {
+  position: absolute;
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  z-index: 3;
+}
+
+.movie__selected--metascore--title {
+  margin-right: 32px;
+}
+
+.movie__selected--ratings {
+  display: flex;
+}
+
+.movie__selected--rating {
+  display: flex;
+  text-align: center;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid #555;
+  border-radius: 4px;
+  margin-right: 8px;
+  padding: 8px 16px;
+}
+
+.movie__selected--source {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.movie__selected--value {
+  margin-bottom: 4px;
+  font-weight: 600;
+}
+
+.movie__selected--subtitle {
+  font-size: 20px;
+  margin-bottom: 8px;
+}
+
+.movie__selected--section {
+  margin-bottom: 24px;
+}
+
+@media(max-width: 1000px) {
+  .movie-page__main--top,
+  .movie__selected {
+    padding: 0 24px;
+  }
+}
+
+@media(max-width: 768px) {
+  .movie__selected {
+    flex-direction: column;
+  }
+  .movie__selected--img {
+    padding: 0 24px;
+    margin-top: 16px;
+    width: 40%;
+  }
+  .movie-page__main--top,
+  .movie__selected {
+    padding: 0px;
+  }
+  .movie__selected--description {
+    width: 100%;
+  }
+}
+
+@media(max-width: 468px) {
+  .movie__selected--facts {
+    row-gap: 16px;
+  }
+  .movie-page__main--top {
+    padding-left: 24px;
+  }
+  .movie-page__main {
+    padding: 24px 0;
+  }
+  .movie__selected--ratings {
+    flex-direction: column;
+    width: 100%;
+  }
+  .movie__selected--rating {
+    margin-bottom: 4px;
+  }
+}
+
+/* SKELETON LOADING STATE */
+
+.movie__selected--title.skeleton {
+  background: #ddd;
+  align-self: flex-start;
+  color: #ddd;
+}
+
+.movie__selected--facts.skeleton {
+  background: #ddd;
+  align-self: flex-start;
+}
+
+.movie__selected--facts.skeleton .movie__selected--rated,
+.movie__selected--facts.skeleton span {
+  opacity: 0;
+}
+
+.movie__selected--metascore.skeleton {
+  background: #ddd;
+  margin-right: 122px;
+}
+
+.movie__selected--ratings.skeleton .movie__selected--rating {
+  background: #ddd;
+  border-color: #ddd;
+}
+
+.movie__selected--ratings.skeleton .movie__selected--value,
+.movie__selected--ratings.skeleton .movie__selected--source {
+  opacity: 0;
+}
+
+.movie__selected--section.skeleton {
+  background: #ddd;
+  color: #ddd;
+}
+
+.movie__selected--section.skeleton h3 {
+  color: #ddd;
+}
