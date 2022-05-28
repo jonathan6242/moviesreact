@@ -14,7 +14,7 @@ function MoviePage() {
   const [loading, setLoading] = useState(true)
  
   const getMovie = async () => {
-    const { data } = await axios.get(`http://www.omdbapi.com/?apikey=74514e3b&i=${id}`)
+    const { data } = await axios.get(`https://www.omdbapi.com/?apikey=74514e3b&i=${id}`)
     setMovie(data);
     setTimeout(() => {
       setLoading(false);
