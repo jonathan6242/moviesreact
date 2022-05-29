@@ -30,6 +30,7 @@ export const MovieProvider = ({ children }) => {
             }
           }
         }
+        console.log(movies);
         setMovies(movies)
       } else {
         setMovies([]);

@@ -7,6 +7,7 @@ import axios from "axios";
 import MovieSection from "../components/MovieSection";
 import MovieFacts from "../components/MovieFacts";
 import SkeletonImage from "../assets/Skeleton image.png"
+import NoImage from "../assets/No Image.png"
 
 function MoviePage() {
   const { id } = useParams();
@@ -15,7 +16,11 @@ function MoviePage() {
  
   const getMovie = async () => {
     const { data } = await axios.get(`https://www.omdbapi.com/?apikey=74514e3b&i=${id}`)
-    setMovie(data);
+    if(data.Poster === "N/A") {
+      setMovie({...data, Poster: NoImage})
+    } else {
+      setMovie(data);
+    }
     setTimeout(() => {
       setLoading(false);
     }, 500)
@@ -42,7 +47,9 @@ function MoviePage() {
       <Navbar selected="browse" />
       <div className="movie-page__main">
         <div className="movie-page__main--top">
-          <Link to='/browse'>
+          <Link 
+            to='/browse'
+          >
             <h2>
               <i className="fa-solid fa-arrow-left"></i> Movies
             </h2>

@@ -38,8 +38,7 @@ function Browse() {
     }
   }, [currentPage])
 
-  const onSubmit = async (e) => {
-    e.preventDefault();
+  const onSubmit = async () => {
     setCurrentPage(1);
     if(filterActive) {
       await getMovies(1, year)
@@ -70,18 +69,27 @@ function Browse() {
         <Navbar />
         <header>
           <h1 className="header__title">Browse our movies</h1>
-          <form onSubmit={onSubmit} className="header__search--container">
+          <div className="header__search--container">
             <input
               value={search}
+              onKeyUp={(e) => {
+                if(e.key === 'Enter') {
+                  onSubmit();
+                }
+              }}
               onChange={(e) => {setSearch(e.target.value)}}
               type="text"
               className="header__search"
               placeholder="Search thousands of movies..."
             />
-            <button type="submit" className="header__search--icon">
+            <button
+              onClick={onSubmit}
+              type="submit"
+              className="header__search--icon"
+            >
               <i className="fa-solid fa-search"></i>
             </button>
-          </form>
+          </div>
         </header>
       </div>
       <div className="main__top">
@@ -103,13 +111,13 @@ function Browse() {
               <span className="slider round"></span>
             </label>
           </div>
-          <form style={{
+          <div style={{
             padding: !filterActive && 0,
             margin: !filterActive && 0,
             height: !filterActive && 0,
             width: !filterActive && 0,
             opacity: !filterActive && 0
-          }} onSubmit={onSubmit} className="main__top--card">
+          }} className="main__top--card">
             <div className="main__top--slider--wrapper">
               <div className="main__top--year" style={{
                 left: yearStyle
@@ -125,10 +133,10 @@ function Browse() {
                 max={2022}
               />
             </div>
-            <button className="main__top--apply">
+            <button onClick={onSubmit} className="main__top--apply">
               FILTER
             </button>
-          </form>        
+          </div>        
         </div>
       </div>
       <main>

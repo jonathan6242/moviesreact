@@ -2,6 +2,7 @@ import "./Movie.css"
 import { AiFillEye } from "react-icons/ai"
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
+import NoImage from "../assets/No Image.png"
 
 function Movie({ Poster, Title, Year, Type, imdbID, movies, loading }) {
   const [img, setImg] = useState()
@@ -10,7 +11,12 @@ function Movie({ Poster, Title, Year, Type, imdbID, movies, loading }) {
   useEffect(() => {
     if(movies) {
       const image = new Image();
-      image.src = Poster;
+      if(Poster === 'N/A') {
+        console.log('N/A')
+        image.src = NoImage;
+      } else {
+        image.src = Poster;
+      }
       image.onload = () => {
         setImg(image)
       }

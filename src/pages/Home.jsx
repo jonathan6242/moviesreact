@@ -30,8 +30,7 @@ function Home() {
     setTotalPages('');
   }, [])
 
-  const onSubmit = async (e) => {
-    e.preventDefault();
+  const onSubmit = async () => {
     setLoading(true);
     setCurrentPage(1);
     setTimeout(() => {
@@ -51,15 +50,26 @@ function Home() {
           <h3 className="header__description--subtitle">
             Find your favourite <span className="primary">movies & shows</span> 
           </h3>
-          <form onSubmit={onSubmit} className="header__input--container">
+          <div className="header__input--container">
             <input
+              onKeyUp={(e) => {
+                if(e.key === 'Enter') {
+                  onSubmit();
+                }
+              }}
               value={search}
               onChange={(e) => {setSearch(e.target.value)}}
               type="text"
               className="header__input"
               placeholder="Search thousands of movies..."
             />
-            <button className={`header__input--search${loading ? ' header__input--search--loading' : ''}`}>
+            <button 
+              onClick={() => {
+                if(!loading) {
+                  onSubmit();
+                }
+              }} 
+              className={`header__input--search${loading ? ' header__input--search--loading' : ''}`}>
               {
                 !loading &&  <i className="fa-solid fa-search"></i>
               }
@@ -67,7 +77,7 @@ function Home() {
                 loading && <i className="fa-solid fa-spinner"></i>
               }
             </button>
-          </form>
+          </div>
         </div>
         <img src={HeaderImage} alt="Header" className="header__img" />
       </header>
