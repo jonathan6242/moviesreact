@@ -4,18 +4,29 @@ import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import NoImage from "../assets/No Image.png"
 
-function Movie({ Poster, Title, Year, Type, imdbID, movies, loading }) {
+function Movie({ 
+    poster_path,
+    original_title, 
+    release_date, 
+    original_language,
+    id,
+    // Title, 
+    // Year, 
+    // Type, 
+    // imdbID, 
+    movies, 
+    loading 
+  }) {
   const [img, setImg] = useState()
   const navigate = useNavigate();
 
   useEffect(() => {
     if(movies) {
       const image = new Image();
-      if(Poster === 'N/A') {
-        console.log('N/A')
+      if(!poster_path) {
         image.src = NoImage;
       } else {
-        image.src = Poster;
+        image.src = `https://image.tmdb.org/t/p/original/${poster_path}`;
       }
       image.onload = () => {
         setImg(image)
@@ -49,16 +60,16 @@ function Movie({ Poster, Title, Year, Type, imdbID, movies, loading }) {
           </figure>
           <div className="movie__description">
             <div className="movie__title">
-              {Title}
+              {original_title}
             </div>
             <div className="movie__info">
               <div className="movie__year">
-                {Year}
+                {release_date ? release_date : 'NO DATE'}
               </div>
               <div className="movie__type" style={{
-                backgroundColor: `${Type === 'movie' ? '#33c5e2' : '#66d42f'}`
+                backgroundColor: `${original_language === 'en' ? '#33c5e2' : '#66d42f'}`
               }}>
-                {Type}
+                {original_language ? original_language?.toUpperCase() : 'N/A'}
               </div>
             </div>
           </div>
@@ -79,7 +90,7 @@ function Movie({ Poster, Title, Year, Type, imdbID, movies, loading }) {
           }
           <div className="movie__img--overlay">
             <button 
-              onClick={() => {navigate(`/browse/${imdbID}`)}}
+              onClick={() => {navigate(`/browse/${id}`)}}
               className="movie__view"
             >
               <AiFillEye />
@@ -88,16 +99,16 @@ function Movie({ Poster, Title, Year, Type, imdbID, movies, loading }) {
         </figure>
         <div className="movie__description">
           <div className="movie__title">
-            {Title}
+            {original_title}
           </div>
           <div className="movie__info">
             <div className="movie__year">
-              {Year}
+              {release_date ? release_date : 'NO DATE'}
             </div>
             <div className="movie__type" style={{
-              backgroundColor: `${Type === 'movie' ? '#33c5e2' : '#66d42f'}`
+              backgroundColor: `${original_language === 'en' ? '#33c5e2' : '#66d42f'}`
             }}>
-              {Type}
+              {original_language ? original_language?.toUpperCase() : 'N/A'}
             </div>
           </div>
       

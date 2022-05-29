@@ -18,19 +18,24 @@ export const MovieProvider = ({ children }) => {
     setSearchTerm(search);
     if(search !== '') {
       setLoading(true)
-      const response = await axios.get(`https://www.omdbapi.com/?i=tt3896198&apikey=74514e3b&s=${search}&page=${page}${year ? `&y=${year}` : ''}`);
-      setTotalPages(Math.ceil(response.data.totalResults / 10))
-      let movies = response.data.Search;
+      const {data} = await axios.get(
+      `https://api.themoviedb.org/3/search/movie?api_key=f597dd07c92aefb370ba6c34bd04ad5a&query=${search}&page=${page}${year ? `&primary_release_year=${year}` : ''}`);
+      // console.log(data);
+      // const response = await axios.get(`https://www.omdbapi.com/?i=tt3896198&apikey=74514e3b&s=${search}&page=${page}${year ? `&y=${year}` : ''}`);
+      // setTotalPages(Math.ceil(response.data.totalResults / 10))
+      setTotalPages(data.total_pages)
+      // let movies = response.data.Search;
+      let movies = data.results.slice(0, 6);
       if(movies?.length > 0) {
-        let i;
-        for(i = 0; i < movies.length; i++) {
-          for(let j = i + 1; j < movies.length; j++) {
-            if(movies[i].imdbID === movies[j].imdbID){
-              movies = movies.filter((_, index) => index !== i);
-            }
-          }
-        }
-        console.log(movies);
+        // let i;
+        // for(i = 0; i < movies.length; i++) {
+        //   for(let j = i + 1; j < movies.length; j++) {
+        //     if(movies[i].id === movies[j].id){
+        //       movies = movies.filter((_, index) => index !== i);
+        //     }
+        //   }
+        // }
+        // console.log(movies);
         setMovies(movies)
       } else {
         setMovies([]);

@@ -145,27 +145,33 @@ function Browse() {
             !loading ? (
               movies?.map(movie => {
                 const {
-                  Poster,
-                  Title,
-                  Type,
-                  Year,
-                  imdbID
+                  poster_path,
+                  original_title,
+                  release_date,
+                  original_language,
+                  // Title,
+                  // Type,
+                  // Year,
+                  id
                 } = movie;
                 return (
                   <Movie
                     movies={movies}
                     loading={loading}
-                    Poster={Poster}
-                    Title={Title}
-                    Type={Type}
-                    Year={Year}
-                    imdbID={imdbID}
-                    key={imdbID}
+                    poster_path={poster_path}
+                    original_title={original_title}
+                    release_date={release_date}
+                    original_language={original_language}
+                    // Title={Title}
+                    // Type={Type}
+                    // Year={Year}
+                    id={id}
+                    key={id}
                   />
                 )
               })
             ) : (
-              new Array(10).fill(0).map((_, index) => {
+              new Array(8).fill(0).map((_, index) => {
                 return <Movie
                   key={index}
                   movies={movies}

@@ -2,33 +2,54 @@ import { Link, useParams } from "react-router-dom"
 import "./MoviePage.css"
 import Navbar from "../components/Navbar";
 import Modal from "../components/Modal";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import MovieSection from "../components/MovieSection";
 import MovieFacts from "../components/MovieFacts";
 import SkeletonImage from "../assets/Skeleton image.png"
 import NoImage from "../assets/No Image.png"
+import MovieContext from "../context/MovieContext";
+import Movie from "../components/Movie"
 
 function MoviePage() {
   const { id } = useParams();
   const [movie, setMovie] = useState('');
+  const [tmdbMovie, setTmdbMovie] = useState('');
   const [loading, setLoading] = useState(true)
+  const [hasImdb, setHasImdb] = useState(true);
+  const [recommendedMovies, setRecommendedMovies] = useState([])
+  const { movies, getMovies, currentPage } = useContext(MovieContext);
  
   const getMovie = async () => {
-    const { data } = await axios.get(`https://www.omdbapi.com/?apikey=74514e3b&i=${id}`)
-    if(data.Poster === "N/A") {
+    setLoading(true);
+    const recommendations = await axios.get(`https://api.themoviedb.org/3/movie/${id}/recommendations?api_key=f597dd07c92aefb370ba6c34bd04ad5a`)
+    setRecommendedMovies(recommendations.data.results.slice(0, 4));
+    const response = await axios.get(`https://api.themoviedb.org/3/movie/${id}?api_key=f597dd07c92aefb370ba6c34bd04ad5a`)
+    const tmdbMovie = response.data;
+    setTmdbMovie(tmdbMovie)
+    if(!tmdbMovie.imdb_id) {
+      setHasImdb(false)
+      setLoading(false);
+      return;
+    }
+    const { data } = await axios.get(`https://www.omdbapi.com/?apikey=74514e3b&i=${response.data.imdb_id}`)
+    if(!tmdbMovie.poster_path) {
       setMovie({...data, Poster: NoImage})
     } else {
-      setMovie(data);
+      setMovie({...data, Poster: tmdbMovie.poster_path});
     }
     setTimeout(() => {
       setLoading(false);
-    }, 500)
+    }, 200)
   }
 
   useEffect(() => {
     getMovie()
   }, [])
+
+  useEffect(() => {
+    getMovie();
+  }, [id])
 
   const ratingColor = (rating) => {
     if(rating >= 70) {
@@ -49,6 +70,7 @@ function MoviePage() {
         <div className="movie-page__main--top">
           <Link 
             to='/browse'
+            onClick={() => {getMovies(currentPage)}}
           >
             <h2>
               <i className="fa-solid fa-arrow-left"></i> Movies
@@ -56,13 +78,23 @@ function MoviePage() {
           </Link>
         </div>
         {
-          !loading && (
+          (!loading && hasImdb) && (
             <div className="movie__selected">
               <figure className="movie__selected--img">
-                <img 
-                  src={movie.Poster}
-                  alt={movie.Title}
-                />
+                {
+                  tmdbMovie.poster_path ? (
+                    <img 
+                      src={`https://image.tmdb.org/t/p/original/${movie.Poster}`}
+                      alt={movie.Title}
+                    />
+                  ) : (
+                    <img 
+                      src={movie.Poster}
+                      alt={movie.Title}
+                    />
+                  )
+                }
+           
               </figure>
               <div className="movie__selected--description">
                 <h1 className="movie__selected--title">
@@ -132,6 +164,84 @@ function MoviePage() {
                   title="Box Office"
                   value={movie.BoxOffice}
                 />
+              </div>
+            </div>
+          )
+        }
+        {
+          (!loading && !hasImdb) && (
+            <div className="movie__selected">
+              <figure className="movie__selected--img">
+                {
+                  tmdbMovie.poster_path ? (
+                    <img 
+                      src={`https://image.tmdb.org/t/p/original/${tmdbMovie.poster_path}`}
+                      alt="Movie"
+                    />
+                  ) : (
+                    <img 
+                      src={NoImage}
+                      alt="Movie"
+                    />
+                  )
+                }
+              </figure>
+              <div className="movie__selected--description">
+                <h1 className="movie__selected--title">
+                    {tmdbMovie.original_title}
+                </h1>
+                <div className="movie__selected--facts">
+                  <MovieFacts facts={
+                    [
+                    tmdbMovie.release_date, 
+                    tmdbMovie.runtime ? tmdbMovie.runtime + " min" : ''
+                  ]
+                  } />
+                </div>
+                <MovieSection 
+                  title="Overview"
+                  value={tmdbMovie.overview}
+                />
+              </div>
+            </div>
+          )
+        }
+        {
+          (!loading && recommendedMovies.length > 0) && (
+            <div className="movie-page__recommended">
+              <h2 className="movie-page__recommended--title">Recommended Movies</h2>
+              <div className="movie-page__recommended--list">
+                
+                {
+                  recommendedMovies.map(movie => {
+                    const {
+                      poster_path,
+                      original_title,
+                      release_date,
+                      original_language,
+                      // Title,
+                      // Type,
+                      // Year,
+                      id
+                    } = movie;
+                    return (
+                      <Movie
+                        onClick={getMovie}
+                        movies={movies}
+                        loading={loading}
+                        poster_path={poster_path}
+                        original_title={original_title}
+                        release_date={release_date}
+                        original_language={original_language}
+                        // Title={Title}
+                        // Type={Type}
+                        // Year={Year}
+                        id={id}
+                        key={id}
+                      />
+                    )
+                  })
+                }
               </div>
             </div>
           )
@@ -211,6 +321,9 @@ function MoviePage() {
           )
         }
       </div>
+      <main>
+   
+      </main>
       <Modal />
 
     </div>
