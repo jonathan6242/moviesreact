@@ -1,11 +1,10 @@
-import { useContext, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import MovieContext from "../context/MovieContext"
 import PageButton from "./PageButton"
 import "./Pagination.css"
 
-function Pagination({currentPage, totalPages}) {
-  const { setCurrentPage } = useContext(MovieContext);
-  
+function Pagination({ currentPage, totalPages, setCurrentPage }) {
+
   const changeCurrentPage = (number) => {
     if(number > 0 && number <= totalPages) {
       setCurrentPage(number)
@@ -15,18 +14,18 @@ function Pagination({currentPage, totalPages}) {
   const generateButtons = (startNumber, endNumber) => {
     if(!endNumber) {
       return (startNumber === currentPage) ? (
-        <PageButton current>{startNumber}</PageButton>
+        <PageButton setCurrentPage={setCurrentPage} current>{startNumber}</PageButton>
       ) : (
-        <PageButton>{startNumber}</PageButton>
+        <PageButton setCurrentPage={setCurrentPage}>{startNumber}</PageButton>
       )
     }
     return new Array(endNumber - startNumber + 1).fill(0).map((_, index) => {
       return (index + startNumber === currentPage) ? (
-        <PageButton current key={index}>
+        <PageButton setCurrentPage={setCurrentPage} current key={index}>
           {index + startNumber}
         </PageButton>
       ) : (
-        <PageButton key={index}>{index + startNumber}</PageButton>
+        <PageButton setCurrentPage={setCurrentPage} key={index}>{index + startNumber}</PageButton>
       )
     })
   }
@@ -38,7 +37,7 @@ function Pagination({currentPage, totalPages}) {
       return (
         <>
           {generateButtons(1, 3)}
-          <PageButton expand changeCurrentPage={changeCurrentPage} />
+          <PageButton setCurrentPage={setCurrentPage} expand changeCurrentPage={changeCurrentPage} />
           {generateButtons(total)}
         </>
       )
@@ -46,7 +45,7 @@ function Pagination({currentPage, totalPages}) {
       return (
         <>
           {generateButtons(1)}
-          <PageButton expand changeCurrentPage={changeCurrentPage} />
+          <PageButton setCurrentPage={setCurrentPage} expand changeCurrentPage={changeCurrentPage} />
           {generateButtons(total - 2, total)}
         </>
       )
@@ -54,9 +53,9 @@ function Pagination({currentPage, totalPages}) {
       return (
         <>
           {generateButtons(1)}
-          <PageButton expand direction={'left'} changeCurrentPage={changeCurrentPage} />
+          <PageButton setCurrentPage={setCurrentPage} expand direction={'left'} changeCurrentPage={changeCurrentPage} />
           {generateButtons(current)}
-          <PageButton expand direction={'right'} changeCurrentPage={changeCurrentPage} />
+          <PageButton setCurrentPage={setCurrentPage} expand direction={'right'} changeCurrentPage={changeCurrentPage} />
           {generateButtons(total)}
         </>
       )

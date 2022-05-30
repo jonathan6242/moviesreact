@@ -20,13 +20,20 @@ function MoviePage() {
   const [hasImdb, setHasImdb] = useState(true);
   const [recommendedMovies, setRecommendedMovies] = useState([])
   const { movies, getMovies, currentPage } = useContext(MovieContext);
- 
+  const [inFavourites, setInFavourites] = useState(false)
+
   const getMovie = async () => {
     setLoading(true);
     const recommendations = await axios.get(`https://api.themoviedb.org/3/movie/${id}/recommendations?api_key=f597dd07c92aefb370ba6c34bd04ad5a`)
     setRecommendedMovies(recommendations.data.results.slice(0, 4));
     const response = await axios.get(`https://api.themoviedb.org/3/movie/${id}?api_key=f597dd07c92aefb370ba6c34bd04ad5a`)
     const tmdbMovie = response.data;
+    if(JSON.parse(localStorage.getItem("favourites"))?.includes(tmdbMovie.id.toString())) {
+      console.log('inFavourites');
+      setInFavourites(true);
+    } else {
+      setInFavourites(false);
+    }
     setTmdbMovie(tmdbMovie)
     if(!tmdbMovie.imdb_id) {
       setHasImdb(false)
@@ -63,6 +70,30 @@ function MoviePage() {
       return '#242424'
     }
   }
+
+  const addToFavourites = () => {
+    let arr = []
+    const favourites = JSON.parse(localStorage.getItem("favourites"))
+    if(!favourites || favourites?.length === 0) {
+      console.log('no favourites')
+      arr = [id]
+      // localStorage.setItem("favourites", JSON.stringify([id]))
+    } else {
+      arr = [id, ...favourites]
+    }
+    localStorage.setItem("favourites", JSON.stringify(arr));
+    setInFavourites(true);
+  }
+
+  const removeFromFavourites = () => {
+    const favourites = JSON.parse(localStorage.getItem("favourites"))
+    console.log(favourites);
+    let arr = favourites.filter(elem => +elem !== +id);
+    localStorage.setItem("favourites", JSON.stringify(arr));
+    setInFavourites(false);
+  }
+
+
 
   return (
     <ScrollToTop>
@@ -108,6 +139,7 @@ function MoviePage() {
                     </div>
                     <MovieFacts facts={[movie.Released, movie.Genre, movie.Runtime]} />
                   </div>
+             
                   <div className="movie__selected--rating--wrapper">
                     <div className="movie__selected--metascore">
                       <div className="movie__selected--metascore--inner">
@@ -166,6 +198,24 @@ function MoviePage() {
                     title="Box Office"
                     value={movie.BoxOffice}
                   />
+                  {
+                    !inFavourites ? (
+                      <button 
+                        className="movie__selected--favourites"
+                        onClick={addToFavourites}
+                      >
+                        <i className="fa-solid fa-star"></i> Add to favourites
+                      </button>
+                    ) : (
+                      <button
+                        className="movie__selected--favourites remove"
+                        onClick={removeFromFavourites}
+                      >
+                        <i className="fa-solid fa-star"></i> Remove from favourites
+                      </button>
+                    )
+                  }
+             
                 </div>
               </div>
             )
@@ -204,6 +254,23 @@ function MoviePage() {
                     title="Overview"
                     value={tmdbMovie.overview}
                   />
+                  {
+                    !inFavourites ? (
+                      <button 
+                        className="movie__selected--favourites"
+                        onClick={addToFavourites}
+                      >
+                        <i className="fa-solid fa-star"></i> Add to favourites
+                      </button>
+                    ) : (
+                      <button
+                        className="movie__selected--favourites remove"
+                        onClick={removeFromFavourites}
+                      >
+                        <i className="fa-solid fa-star"></i> Remove from favourites
+                      </button>
+                    )
+                  }
                 </div>
               </div>
             )
@@ -318,6 +385,9 @@ function MoviePage() {
                     value="$238,679,850"
                     skeleton
                   />
+                  <div className="movie__selected--favourites skeleton">
+                    <i className="fa-solid fa-star"></i> Add to favourites
+                  </div>
                 </div>
               </div>
             )

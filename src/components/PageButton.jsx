@@ -2,8 +2,8 @@ import { useContext } from "react"
 import MovieContext from "../context/MovieContext"
 
 
-function PageButton({children, current, expand, direction, changeCurrentPage}) {
-  const { setCurrentPage } = useContext(MovieContext)
+function PageButton({children, current, expand, direction, changeCurrentPage, setCurrentPage}) {
+  // const { setCurrentPage } = useContext(MovieContext)
 
   const expandInput = (direction) => {
     if(!direction) {

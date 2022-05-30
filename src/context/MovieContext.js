@@ -10,6 +10,7 @@ export const MovieProvider = ({ children }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [loading, setLoading] = useState(false)
   const [totalPages, setTotalPages] = useState('');
+ 
 
   async function getMovies(page, year) {
     if(loading) {

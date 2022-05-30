@@ -15,7 +15,7 @@ function Movie({
     // Type, 
     // imdbID, 
     movies, 
-    loading 
+    loading
   }) {
   const [img, setImg] = useState()
   const navigate = useNavigate();

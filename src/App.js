@@ -5,6 +5,7 @@ import Home from "./pages/Home"
 import Browse from "./pages/Browse";
 import { MovieProvider } from "./context/MovieContext";
 import MoviePage from "./pages/MoviePage";
+import Favourites from "./pages/Favourites";
 
 function App() {
   const onClick = (e) => {
@@ -36,6 +37,7 @@ function App() {
           <Route path='/' exact element={<Home />} />
           <Route path='/browse' element={<Browse />} />
           <Route path='/browse/:id' element={<MoviePage />} />
+          <Route path='/favourites' element={<Favourites />} />
         </Routes>
       </div>
       </Router>

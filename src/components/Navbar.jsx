@@ -26,9 +26,15 @@ function Navbar({ selected }) {
         >
           Browse movies
         </Link>
-        <button className="nav__contact" onClick={() => {alert('This feature is not available yet.')}}>
+        <Link
+          className={`link__hover-effect ${selected === 'favourites' ? 'selected' : ''}`} 
+          to='/favourites'
+        >
+          Favourites
+        </Link>
+        {/* <button className="nav__contact" onClick={() => {alert('This feature is not available yet.')}}>
           Contact
-        </button>
+        </button> */}
       </div>
       <button onClick={toggleMenu} className="nav__menu">
         <i className="fa-solid fa-bars"></i>

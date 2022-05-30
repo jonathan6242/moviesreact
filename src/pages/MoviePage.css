@@ -176,6 +176,31 @@
   }
 } */
 
+.movie__selected--favourites {
+  background: var(--primary);
+  color: #fff;
+  align-self: flex-start;
+  padding: 12px 16px;
+  font-size: 16px;
+  font-weight: 500;
+  border-radius: 4px;
+  margin-top: 8px;
+}
+
+.movie__selected--favourites i {
+  color: #fff;
+  margin-right: 4px;
+}
+
+.movie__selected--favourites.remove {
+  color: #fff;
+  background: #242424;
+}
+
+.movie__selected--favourites.remove i {
+  color: #fff;
+}
+
 @media(max-width: 1000px) {
   .movie-page__main--top,
   .movie__selected,
@@ -269,4 +294,10 @@
 
 .movie__selected--section.skeleton h3 {
   color: #ddd;
+}
+
+.movie__selected--favourites.skeleton,
+.movie__selected--favourites.skeleton i {
+  color: #ddd;
+  background: #ddd;
 }

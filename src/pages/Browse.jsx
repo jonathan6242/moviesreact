@@ -171,7 +171,7 @@ function Browse() {
                 )
               })
             ) : (
-              new Array(8).fill(0).map((_, index) => {
+              new Array(6).fill(0).map((_, index) => {
                 return <Movie
                   key={index}
                   movies={movies}
@@ -187,6 +187,7 @@ function Browse() {
           <Pagination 
             currentPage={currentPage}
             totalPages={totalPages}
+            setCurrentPage={setCurrentPage}
           />
         )
       }

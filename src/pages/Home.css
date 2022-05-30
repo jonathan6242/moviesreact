@@ -35,7 +35,7 @@ nav {
 .nav__links { 
   display: flex;
   align-items: center;
-  width: 430px;
+  width: 400px;
   justify-content: space-between;
 }
 
@@ -52,9 +52,9 @@ nav {
   background-color: var(--primary);
 }
 
-.nav__contact {
+.nav__links a.nav__contact {
   padding: 12px 24px;
-  font-size: 16px;
+  font-size: 14px;
   text-transform: uppercase;
   font-weight: bold;
   border-radius: 9999px;
