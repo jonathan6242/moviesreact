@@ -19,7 +19,7 @@ export const MovieProvider = ({ children }) => {
     if(search !== '') {
       setLoading(true)
       const {data} = await axios.get(
-      `https://api.themoviedb.org/3/search/movie?api_key=f597dd07c92aefb370ba6c34bd04ad5a&query=${search}&page=${page}${year ? `&primary_release_year=${year}` : ''}`);
+      `https://api.themoviedb.org/3/search/movie?api_key=f597dd07c92aefb370ba6c34bd04ad5a&include_adult=false&query=${search}&page=${page}${year ? `&primary_release_year=${year}` : ''}`);
       // console.log(data);
       // const response = await axios.get(`https://www.omdbapi.com/?i=tt3896198&apikey=74514e3b&s=${search}&page=${page}${year ? `&y=${year}` : ''}`);
       // setTotalPages(Math.ceil(response.data.totalResults / 10))

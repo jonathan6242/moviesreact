@@ -27,7 +27,7 @@
 .movie__selected--img {
   width: 30%;
   display: flex;
-  align-items: start;
+  align-items: flex-start;
   justify-content: center;
   padding: 24px 8px;
   min-width: 270px;
