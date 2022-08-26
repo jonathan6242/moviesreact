@@ -26,7 +26,7 @@ export const MovieProvider = ({ children }) => {
       // setTotalPages(Math.ceil(response.data.totalResults / 10))
       setTotalPages(data.total_pages)
       // let movies = response.data.Search;
-      let movies = data.results.slice(0, 6);
+      let movies = data.results.slice(0, 8);
       if(movies?.length > 0) {
         // let i;
         // for(i = 0; i < movies.length; i++) {

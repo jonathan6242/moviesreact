@@ -20,10 +20,11 @@ button {
 
 :root {
   --primary: #F95738;
-  --secondary: #C845B7;
+  --secondary: #dc482a;
   --tertiary: #F4D35E;
   --background: whitesmoke;
 }
+
 
 /* html {
   width: 100vw;

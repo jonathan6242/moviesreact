@@ -20,9 +20,9 @@ function Favourites() {
     setLoading(true);
     let arr = [];
     const favouriteIDs = JSON.parse(localStorage.getItem("favourites")).reverse();
-    const totalPages = Math.ceil(favouriteIDs.length / 6)
+    const totalPages = Math.ceil(favouriteIDs.length / 8)
     setPages(totalPages);
-    const currentPageIDs = favouriteIDs.slice(0 + 6 * (page - 1), 6 + 6 * (page - 1));
+    const currentPageIDs = favouriteIDs.slice(0 + 8 * (page - 1), 8 + 8 * (page - 1));
     for(let id of currentPageIDs) {
       const response = await axios.get(`https://api.themoviedb.org/3/movie/${id}?api_key=f597dd07c92aefb370ba6c34bd04ad5a`)
       const movie = response.data;
